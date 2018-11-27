@@ -5,8 +5,6 @@ const { PORT } = require('./config');
 
 // Koa
 const app = new Koa();
-const s = process.env.NODE_ENV
-console.log(s)
 
 // middleware
 middleware(app, router);
