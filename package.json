@@ -1,0 +1,20 @@
+{
+  "name": "docker-practive-node-backend",
+  "version": "1.0.0",
+  "description": "",
+  "main": "main.js",
+  "scripts": {
+    "dev": "NODE_ENV=develop node ./main",
+    "start": "NODE_ENV=production node ./main"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "koa": "^2.6.2",
+    "koa-bodyparser": "^4.2.1",
+    "koa-context-validator": "^0.4.1",
+    "koa-logger": "^3.2.0",
+    "koa-router": "^7.4.0"
+  }
+}
