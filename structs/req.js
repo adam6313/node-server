@@ -8,8 +8,14 @@ const CreateUser_req = validator({
   body: object().keys({
     name: string().required(),
     age: number().required(),
+    uuid: string().required(),
   }),
 });
 
-module.exports = { CreateUser_req };
-  
+const DeleteUser_req = validator({
+  body: object().keys({
+    uuid: string().required()
+  })
+})
+
+module.exports = { CreateUser_req, DeleteUser_req };

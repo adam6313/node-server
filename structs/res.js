@@ -1,9 +1,9 @@
 const codeMap = require('./codeMap');
 
-
+// Default response struct
 const Layout = {
   data: null,
-  ststus: {
+  status: {
     code: '',
     time: '',
     message: '',
@@ -12,9 +12,9 @@ const Layout = {
 
 module.exports = (code, data = null) => {
   Layout.data = data;
-  Layout.ststus.time = new Date();
-  Layout.ststus.message = codeMap[code] || codeMap[100];
-  Layout.ststus.code = codeMap[code] ? code : 100;
+  Layout.status.time = new Date();
+  Layout.status.message = codeMap[code] || codeMap[100];
+  Layout.status.code = codeMap[code] ? code : 100;
   
   return Layout;
 }

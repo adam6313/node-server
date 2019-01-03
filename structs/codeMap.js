@@ -1,3 +1,5 @@
+// status code
+
 module.exports = {
   0: 'success',
   1: 'Validation Error',
