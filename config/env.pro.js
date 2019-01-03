@@ -1,4 +1,4 @@
 // Product environment variable
 module.exports = {
-  // PORT: '4444',
+  PORT: '4444',
 };
