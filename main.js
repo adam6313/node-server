@@ -7,7 +7,7 @@ const { PORT } = require('./config');
 const app = new Koa();
 
 // middleware
-middleware(app, router);
+middleware(app);
 
 // lister http port
 app.listen(PORT, () => {

@@ -10,7 +10,7 @@ const CreateUser_req = validator({
     age: number().required(),
     uuid: string().required(),
   }),
-});
+})
 
 const DeleteUser_req = validator({
   body: object().keys({
