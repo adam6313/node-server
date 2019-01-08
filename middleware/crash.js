@@ -9,7 +9,7 @@ module.exports = async (ctx, next) => {
   try {
     await next();
   } catch (err) {
-    
+    console.log(err)
     // Validation
     if (Validation(err)) {
       ctx.body = Response(1);

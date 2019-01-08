@@ -1,10 +1,14 @@
 const Koa = require('koa');
 const middleware = require('./middleware');
-const router = require('./router');
 const { PORT } = require('./config');
+
+const PoolInit = require('./pool');
 
 // Koa
 const app = new Koa();
+
+// init db
+PoolInit(app);
 
 // middleware
 middleware(app);

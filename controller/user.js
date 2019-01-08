@@ -1,4 +1,5 @@
 const Response = require('../structs/res');
+const { Mongo } = require('../config');
 
 // test data
 const UserList = [{
@@ -23,6 +24,11 @@ const UserList = [{
  * Get Users info
  */
 const Users = async ctx => {
+  const { DBName } = Mongo;
+  const [ res, err ] = await ctx.mongo.DB(DBName).col('Customer').find({});
+  console.log(res)
+
+
   // Data
   const Data = Object.assign([], UserList)
 
