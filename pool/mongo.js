@@ -55,10 +55,16 @@ module.exports = class {
     return new Promise(resolve => {
       this.coll.find(query).toArray((err, docs) => {
         if (err) {
+          this.close();
           return resolve([ null, err ]);
         }
+        this.close();
         resolve([ docs, null ]);
       })
     })
+  }
+
+  close() {
+    this.client.close();
   }
 }
