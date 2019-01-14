@@ -2,20 +2,35 @@ const {
   default: validator,
   object,
   string,
+  boolean,
   number } = require('koa-context-validator');
+
+User_req = validator({
+  query: object().keys({
+    id: string().required(),
+  })
+})
 
 const CreateUser_req = validator({
   body: object().keys({
-    name: string().required(),
+    identity: string().required(),
     age: number().required(),
-    uuid: string().required(),
+    sex: string().required(),
+    name: string().required(),
+    tel: string().required(),
+    phone: number().required(),
+    birthday: string().required(),
+    marriage: boolean().required(),
+    blood: string().required(),
+    height: number().required(),
+    weight: number().required(),
   }),
 })
 
 const DeleteUser_req = validator({
   body: object().keys({
-    uuid: string().required()
+    id: string().required()
   })
 })
 
-module.exports = { CreateUser_req, DeleteUser_req };
+module.exports = { User_req, CreateUser_req, DeleteUser_req };

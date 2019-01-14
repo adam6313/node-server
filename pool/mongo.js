@@ -1,4 +1,4 @@
-const MongoClient = require('mongodb').MongoClient;
+const { MongoClient, ObjectId } = require('mongodb');
 
 const option = {
   useNewUrlParser: true,
@@ -47,6 +47,14 @@ module.exports = class {
   }
 
   col(collection) {
+    if (collection === undefined) {
+      throw (new Error('collection is undefined'));
+    }
+
+    if (this.client === null) {
+      throw (new Error('Mongo connect error'));
+    }
+
     this.coll = this.db.collection(collection);
     return this;
   }
@@ -55,16 +63,36 @@ module.exports = class {
     return new Promise(resolve => {
       this.coll.find(query).toArray((err, docs) => {
         if (err) {
-          this.close();
           return resolve([ null, err ]);
         }
-        this.close();
         resolve([ docs, null ]);
       })
     })
   }
 
-  close() {
-    this.client.close();
+  insertOne(query) {
+    return new Promise(resolve => {
+      this.coll.insertOne(query, (err, docs) => {
+        if (err) {
+          return resolve([ null, err ]);
+        }
+        resolve([ docs, null ]);
+      })
+    })
+  }
+
+  remove(query) {
+    return new Promise(resolve => {
+      this.coll.remove(query, (err, docs) => {
+        if (err) {
+          return resolve([ null, err ]);
+        }
+        resolve([ docs, null ]);
+      })
+    })
+  }
+
+  ObjectId(id) {
+    return new ObjectId(id)
   }
 }

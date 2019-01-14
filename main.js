@@ -7,7 +7,7 @@ const PoolInit = require('./pool');
 // Koa
 const app = new Koa();
 
-// init db
+// Init DB
 PoolInit(app);
 
 // middleware

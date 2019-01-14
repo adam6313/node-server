@@ -4,6 +4,7 @@
   "description": "",
   "main": "main.js",
   "scripts": {
+    "dev2": "NODE_ENV=develop nodemon ./main",
     "dev": "NODE_ENV=develop node ./main",
     "start": "NODE_ENV=production node ./main"
   },
@@ -11,6 +12,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "bson": "^4.0.1",
     "koa": "^2.6.2",
     "koa-bodyparser": "^4.2.1",
     "koa-context-validator": "^0.4.1",

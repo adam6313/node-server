@@ -1,67 +1,124 @@
 const Response = require('../structs/res');
-const { Mongo } = require('../config');
-
-// test data
-const UserList = [{
-  uuid: '121hf12',
-  name: 'adam',
-  age: 26,
-}, {
-  uuid: '19283121',
-  name: 'Peter',
-  age: 20,
-}, {
-  uuid: '1231423',
-  name: 'Tina',
-  age: 30,
-}, {
-  uuid: '1231423',
-  name: 'Mao',
-  age: 23,
-}];
+const { Mongo: { DBName } } = require('../config');
+const { isEmpty } = require('lodash');
 
 /**
  * Get Users info
  */
 const Users = async ctx => {
-  const { DBName } = Mongo;
   const [ res, err ] = await ctx.mongo.DB(DBName).col('Customer').find({});
-  console.log(res)
+  console.log(err)
+  // mongo error
+  if (err !== null) {
+    ctx.body = Response(2);
+    return;
+  }
 
-
-  // Data
-  const Data = Object.assign([], UserList)
+  // Is empty
+  if (isEmpty(res)) {
+    ctx.body = Response(0, []);
+    return;
+  }
 
   // Response
-  ctx.body = Response(0, Data);
+  ctx.body = Response(0, res);
 };
 
 /**
- * crash hook Demo
+ * Get user by id
  */
 const User = async ctx => {
-  console.log(not_Variable); // crash script
-  
-  ctx.body = Response(0);
+  const { id } =  ctx.request.query;
+  if (id.length !== 24) {
+    ctx.body = Response(3);
+    return;
+  }
+  const ObjectId = ctx.mongo.ObjectId(id);
+  const [ res, err ] = await ctx.mongo.DB(DBName).col('Customer').find({ '_id': ObjectId });
+  if (err !== null) {
+    ctx.body = Response(2);
+    return;
+  }
+
+  // Is empty
+  if (isEmpty(res)) {
+    ctx.body = Response(0);
+    return;
+  }
+  ctx.body = Response(0, res);
 }
 
 /**
  * Create user
  */
 const CreateUser = async ctx => {
-  const { uuid, name, age } = ctx.request.body;
+  const { identity, age, sex, name, tel, phone, birthday, marriage, blood, height, weight } = ctx.request.body;
 
-  const arr = UserList.push({
-    uuid,
+  let [ res, err ] = await ctx.mongo.DB(DBName).col('Customer').find({ identity })
+
+  if (err !== null) {
+    console.log(err)
+    ctx.body = Response(2);
+    return;
+  }
+  
+  // has data
+  if (res && !isEmpty(res)) {
+    ctx.body = Response(4);
+    return;
+  }
+
+  // insert data
+  [ res, err ] = await ctx.mongo.DB(DBName).col('Customer').insertOne({
+    identity,
+    age,
+    sex, 
     name,
-    age
+    tel,
+    phone,
+    registered: new Date(),
+    birthday,
+    marriage,
+    blood,
+    height,
+    weight
   })
-  ctx.body = Response(0, arr)
+
+  if (err !== null) {
+    ctx.body = Response(2);
+    return;
+  }
+
+  if (res) {
+    ctx.body = Response(0);
+    return;
+  }
+  ctx.body = Response(100);
 };
 
+/**
+ * 
+ * Delete user
+ */
 const DeleteUser = async ctx => {
-  const { uuid } = ctx.request.body;
-  ctx.body = Response(0, uuid);
+  const { id } = ctx.request.body;
+  if (id.length !== 24) {
+    ctx.body = Response(3);
+    return;
+  }
+  const ObjectId = ctx.mongo.ObjectId(id);
+  const [ res, err ] = await ctx.mongo.DB(DBName).col('Customer').remove({ '_id': ObjectId });
+
+  if (err !== null) {
+    ctx.body = Response(2);
+    return;
+  }
+
+  if (res && !isEmpty(res)) {
+    ctx.body = Response(0);
+    return;
+  }
+  ctx.body = Response(100);
 }
 
 module.exports = { Users, User, CreateUser, DeleteUser };
