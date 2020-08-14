@@ -2,8 +2,11 @@ const Router = require('koa-router');
 
 // router
 const router = new Router();
-const { Users, User, CreateUser, DeleteUser } = require('../controller/user');
+const { Test, Users, User, CreateUser, DeleteUser } = require('../controller/user');
 const { User_req, CreateUser_req, DeleteUser_req } = require('../structs/req');
+
+// Test
+router.get('/test', Test);
 
 // Get users
 router.get('/users', Users);
@@ -15,6 +18,6 @@ router.get('/user', User_req, User);
 router.post('/user', CreateUser_req, CreateUser);
 
 // Delete user
-router.del('/user', DeleteUser_req, DeleteUser);
+router.del('/user', DeleteUser_req, DeleteUser)
 
 module.exports = router;

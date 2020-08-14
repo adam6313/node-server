@@ -3,11 +3,17 @@ const { Mongo: { DBName } } = require('../config');
 const { isEmpty } = require('lodash');
 
 /**
+ * Test
+ */
+const Test = async ctx => {
+  ctx.body = Response(0);
+};
+
+/**
  * Get Users info
  */
 const Users = async ctx => {
   const [ res, err ] = await ctx.mongo.DB(DBName).col('Customer').find({});
-  console.log(err)
   // mongo error
   if (err !== null) {
     ctx.body = Response(2);
@@ -121,4 +127,4 @@ const DeleteUser = async ctx => {
   ctx.body = Response(100);
 }
 
-module.exports = { Users, User, CreateUser, DeleteUser };
+module.exports = { Test, Users, User, CreateUser, DeleteUser };

@@ -4,7 +4,7 @@
   "description": "",
   "main": "main.js",
   "scripts": {
-    "dev2": "NODE_ENV=develop nodemon ./main",
+    "nodemon": "NODE_ENV=develop nodemon ./main",
     "dev": "NODE_ENV=develop node ./main",
     "start": "NODE_ENV=production node ./main"
   },

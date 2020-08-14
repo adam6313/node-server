@@ -1,9 +1,13 @@
 const mongo = require('./mongo');
 const { Mongo } = require('../config');
+const { isEmpty } = require('lodash');
 
 // init
 module.exports = async app => {
   // mongo
-  app.context.mongo = await new mongo(Mongo);
-
+  const [ client, err ] = await new mongo(Mongo).init();
+  if (err) {
+    return err;
+  }
+  app.context.mongo = client;
 }

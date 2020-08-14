@@ -2,8 +2,8 @@
 module.exports = {
   PORT: '3333',
   Mongo: {
-    Host: 'mongodb://localhost',
-    Port: '27017',
+    Host: 'mongodb://localhost/sadasd',
+    Port: '27017asdasd',
     UserName: '',
     Password: '',
     DBName: 'Pandora',
